@@ -10,7 +10,8 @@ import Tictactoe from './components/tictactoe/tictactoe.component';
 export default function App() {
   return (
     <View style={styles.container}>
-      
+      <NavBar/>
+      <Home/>
     </View>
   );
 }
