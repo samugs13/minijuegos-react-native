@@ -1,10 +1,11 @@
 import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function Question(props) {
 
 	return (
-		<div>
-			<h3>{props.question}</h3>
-		</div>
+		<View>
+			<Text>{props.question}</Text>
+		</View>
 	);
 }
