@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
-
-import { LangContext } from "../../lang/LangContext.component";
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function Answer(props) {
-	const dictionary = useContext(LangContext).dictionary;
 
 	function handleAnswerChange(e) {
 		props.onAnswerChange(e.target.value);

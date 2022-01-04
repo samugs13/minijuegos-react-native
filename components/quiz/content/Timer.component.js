@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function Timer(props) {
 	const {initialMinute = 0,initialSeconds = 0} = props;
