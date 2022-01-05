@@ -1,18 +1,12 @@
-import React, { useContext } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
 
-import Home from '../home/home.component'
+import Home from '../home/home.component';
+import Tictactoe from '../tictactoe/tictactoe.component';
+import Quiz from '../quiz/quiz.component';
 
-const Stack = createStackNavigator();
 
-export default function Navbar() {
 
-	return(
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name="Home" component={Home} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    );
+export default function Navbar(props) {
+
 }

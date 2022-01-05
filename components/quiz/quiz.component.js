@@ -1,19 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react';
-import {Toast} from "bootstrap";
+import { View, Text } from 'react-native';
+
+import Style from '../../style/quiz.style';
 
 import Actionbar from './content/Actionbar.component';
 import Score from './content/Score.component'
 import QuizNavBar from './content/QuizNavBar.component';
-import Message from './content/Message.component'
 import Question from './content/Question.component'
 import Photo from './content/Photo.component'
 import Answer from './content/Answer.component'
 import Author from './content/Author.component'
 import Timer from './content/Timer.component'
 
-export default function Quiz() {
-
-	const lang = useContext(LangContext);
+export default function Quiz(props) {
 
 	const [quizzes, setQuizzes] = useState([]);
 	const [loaded, setLoaded] = useState(false);
@@ -63,16 +62,16 @@ export default function Quiz() {
 			changeButtonState('submit-btn', true);
 		}
 	}, [loaded, currentQuiz, quizzes]);
-
+	
 	useEffect(() => {
 		// Set saved user answer
 		const answerField = document.getElementById('user-answer');
 		if (answerField) {
 			answerField.value = userAnswers[currentQuiz];
 		}
-
+	
 	}, [loaded, currentQuiz, userAnswers]);
-
+	
 	useEffect(() => {
 		const answerField = document.getElementById('user-answer');
 		if (answerField) {
@@ -139,60 +138,56 @@ export default function Quiz() {
 	}
 
 	function onTimeOut() {
-		showNotification("notification-timeout");
+		// showNotification("notification-timeout");
 		handleAnswerSubmit();
 	}
 
-	function showNotification(id) {
-		const toastAnswer = document.getElementById(id)
-		const toast = new Toast(toastAnswer);
-		toast.show()
-	}
-
+	// function showNotification(id) {
+	// 	const toastAnswer = document.getElementById(id)
+	// 	const toast = new Toast(toastAnswer);
+	// 	toast.show()
+	// }
+	
 	return (
-		<div>
-			<h1>{lang.dictionary["QUIZ"]}</h1>
+		<View style={Style.container}>
+			<Text style={Style.title}>QUIZ</Text>
 			{quizzes[currentQuiz] ? (
-				<div className="container">
-					<div className="row">
+				<View style={Style.container}>
+					<View>
 						<QuizNavBar index={currentQuiz} total={quizzes.length} userAnswers={userAnswers} answerCorrect={answerCorrect} onClick={setCurrentQuiz}/>
-					</div>
-					<div className="row row-cols-2 my-5 justify-content-center" style={{height:"40vh"}}>
-						<div className="d-flex flex-column" style={{height:"100%"}}>
+					</View>
+					<View>
+						<View>
 							<Photo photo={quizzes[currentQuiz].attachment}/>
-						</div>
-						<div
-							className="d-flex justify-content-around flex-column"
-							style={{minHeight:"100%"}}
-						>
-							<div className="d-flex justify-content-around">
+						</View>
+						<View >
+							<View>
 								{finished ? (
 									<Score score={score}/>
 								) : (
 									<Timer initialMinute={timer.minutes} initialSeconds={timer.seconds} onTimeOut={onTimeOut}/>
 								)}
-							</div>
-							<div>
+							</View>
+							<View>
 								<Question question={quizzes[currentQuiz].question}/>
-							</div>
-							<div>
+							</View>
+							<View>
 								<Answer onAnswerChange={onChangeUserAnswer} correctAnswer={quizzes[currentQuiz].answer} correct={answerCorrect[currentQuiz]} handleEnterKey={nextQuiz}/>
-							</div>
-							<div>
+							</View>
+							<View style={Style.container}>
 								<Actionbar nextClick={nextClick} previousClick={previousClick} submitClick={handleAnswerSubmit} reClick={reset} finished={finished}/>
-							</div>
-							<div className="align-self-end">
+							</View>
+							<View>
 								<Author author={quizzes[currentQuiz].author}/>
-							</div>
-						</div>
-					</div>
-				</div>
+							</View>
+						</View>
+					</View>
+				</View>
 			) : (
-				<div className="spinner-border" role="status">
-					<span className="visually-hidden">Loading...</span>
-				</div>
+				<View role="status">
+					<Text>Loading...</Text>
+				</View>
 			) }
-			<Message id="notification-timeout" message={lang.dictionary.timeout}/>
-		</div>
+		</View>
 	);
 }

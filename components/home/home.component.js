@@ -1,13 +1,20 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React  from 'react';
+import { Text, View, Button } from 'react-native';
+import Style from "../../style/quiz.style";
 
-export default class Home extends Component {
-	render() {
-		return (
-			<View>
-				<Text>JUEGOS PARA TODOS</Text>
-				<Text>La mejor página de minijuegos</Text>
-			</View>
-		);
-	}
+export default function Home(props) {
+	return (
+		<View>
+			<Text style={Style.title}>JUEGOS PARA TODOS</Text>
+			<Text style={Style.container}>La mejor página de minijuegos</Text>
+			<Button
+				title="TicTacToe"
+				onPress={() => props.navigation.navigate("Tictactoe") }
+			/>
+			<Button
+				title="Quiz"
+				onPress={() => props.navigation.navigate("Quiz") }
+			/>
+		</View>
+	);
 }

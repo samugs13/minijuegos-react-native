@@ -1,13 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
+
+import Style from "../../../style/quiz.style";
 
 export default function Photo(props) {
 
-	const displayPhoto = props.photo ? props.photo.url : "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image.jpg";
+	const displayPhoto = props.photo ? props.photo.url : "https://via.placeholder.com/300";
 
 	return (
-		<div>
-			<img src={displayPhoto} className="city-photo" alt="quiz"/>
-		</div>
+		<View>
+			<Image
+				style={Style.img}
+				source={{
+					uri: displayPhoto,
+				}}
+			/>
+		</View>
 	);
 }

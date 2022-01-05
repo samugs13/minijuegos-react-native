@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
+import Style from "../../../style/quiz.style";
 
 export default function Answer(props) {
 
@@ -20,21 +21,28 @@ export default function Answer(props) {
 	}
 
 	return (
-		<div className="col-7 mx-auto">
-			<input
+		<View className="col-7 mx-auto">
+			<TextInput
 				className={`form-control ${checkAnswer()}`}
 				id="user-answer"
 				type="text"
 				onChange={handleAnswerChange}
 				onKeyPress={handleKeyPress}
 			>
-			</input>
-			<div className="valid-feedback">
-				{dictionary.correct}
-			</div>
-			<div className="invalid-feedback">
-				{`${dictionary.incorrect}: ${props.correctAnswer}`}
-			</div>
-		</div>
+			</TextInput>
+			<Text 
+				className="valid-feedback"
+				style={Style.correct}>
+				
+				Correct!
+
+			</Text>
+			<Text 
+				className="invalid-feedback"
+				style={Style.incorrect}
+			>
+				{`Incorrect: ${props.correctAnswer}`}
+			</Text>
+		</View>
 	);
 }

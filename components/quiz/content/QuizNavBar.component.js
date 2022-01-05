@@ -1,4 +1,6 @@
 import React from 'react';
+import { View, Text } from 'react-native';
+import Style from '../../../style/quiz.style';
 
 export default function QuizNavBar(props) {
 
@@ -41,10 +43,13 @@ export default function QuizNavBar(props) {
 		}
 		return buttons;
 	}
-
+	
 	return (
-		<div className="btn-group" role="group" aria-label="Quiz Navigation Bar">
+		<View
+			label="Quiz Navigation Bar"
+			style={Style.quizNavBar}
+		>
 			{buttonRow()}
-		</div>
+		</View>
 	);
 }

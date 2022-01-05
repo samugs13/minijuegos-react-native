@@ -26,7 +26,6 @@ export default function App(props) {
     async function fetchData() {
       const res = await fetch("http://myjson.dit.upm.es/api/bins/ccr5");
       const myjson = await res.json();
-      console.log(myjson);
       setTurn(myjson.turn);
       setMoves(myjson.moves);
       setValues(myjson.values);

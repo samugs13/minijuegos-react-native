@@ -29,8 +29,8 @@ export default function Timer(props) {
 	});
 
 	return (
-		<div>
-			<h1> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</h1>
-		</div>
+		<View>
+			<Text> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</Text>
+		</View>
 	);
 }
