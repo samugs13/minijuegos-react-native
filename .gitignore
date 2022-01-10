@@ -105,6 +105,7 @@ dist
 
 # Expo
 .expo/
+.expo-*/
 
 # yarn lock
 yarn.lock
