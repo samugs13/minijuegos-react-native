@@ -9,7 +9,7 @@ const Style = StyleSheet.create({
     },
 
     title: {
-        fontWeigh: 'bold',
+        fontWeight: 'bold',
         textAlign: 'center',
         color:'blue'
     },
@@ -36,7 +36,7 @@ const Style = StyleSheet.create({
     },
 
     author: {
-        fontWeigh: 'bold',
+        fontWeight: 'bold',
     },
 
     correct: {
@@ -51,7 +51,7 @@ const Style = StyleSheet.create({
     actionBar: {
         flexDirection: "row",
     },
-    
+
     quizNavBar: {
         flexDirection: "row",
     },
