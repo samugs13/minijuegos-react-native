@@ -25,12 +25,11 @@ const Style = StyleSheet.create({
         height: 50,
         borderRadius: 50,
         margin: 'auto',
-        display: 'block',
     },
 
     question: {
         textAlign: 'center',
-        fontsize: 25,
+        fontSize: 25,
         textTransform: 'capitalize',
 
     },
