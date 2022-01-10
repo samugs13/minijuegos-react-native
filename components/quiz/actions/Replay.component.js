@@ -1,5 +1,5 @@
-import React, {useContext}  from 'react';
-import { StyleSheet, Text, View, Button} from 'react-native';
+import React from 'react';
+import { Button} from 'react-native';
 
 import {Colors} from "../../../style/quiz.style";
 

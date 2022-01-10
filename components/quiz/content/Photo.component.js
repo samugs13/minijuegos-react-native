@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { View, Image } from 'react-native';
 
 import Style from "../../../style/quiz.style";
 

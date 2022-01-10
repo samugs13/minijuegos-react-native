@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { View, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, ScrollView, View, Text } from 'react-native';
 
 import Style from '../../style/quiz.style';
 
@@ -96,14 +96,6 @@ export default function Quiz(props) {
 		setFinished(false);
 		setUserAnswers([])
 		fetchData();
-		changeButtonState('prev-btn', false);
-	}
-
-	function changeButtonState(buttonName, state){
-		// const button = document.getElementById(buttonName)
-		// if (button) {
-		// 	button.disabled = !state;
-		// }
 	}
 
 	function onChangeUserAnswer(answer){
@@ -116,7 +108,8 @@ export default function Quiz(props) {
 		let acertadas = 0
 		let list = [...answerCorrect];
 		for (let i = 0; i < quizzes.length; i++) {
-			if (userAnswers[i].toLowerCase() === quizzes[i].answer.toLowerCase()) {
+			if (!userAnswers[i]) list[i] = false;
+			else if (userAnswers[i].toLowerCase() === quizzes[i].answer.toLowerCase()) {
 				acertadas += 1;
 				list[i] = true;
 			}
@@ -135,45 +128,49 @@ export default function Quiz(props) {
 	}
 
 	return (
-		<View style={Style.container}>
-			<Text style={Style.title}>QUIZ</Text>
-			{quizzes[currentQuiz] ? (
+		<SafeAreaView style={Style.container}>
+			<ScrollView style={Style.scrollview}>
 				<View style={Style.container}>
-					<View>
-						{finished ? (
-							<Score score={score}/>
-						) : (
-							<Timer initialMinute={timer.minutes} initialSeconds={timer.seconds} onTimeOut={onTimeOut}/>
-						)}
-					</View>
-					<View>
-						<QuizNavBar index={currentQuiz} total={quizzes.length} userAnswers={userAnswers} answerCorrect={answerCorrect} onClick={setCurrentQuiz}/>
-					</View>
-					<View>
-						<View>
-							<Photo photo={quizzes[currentQuiz].attachment}/>
+					<Text style={Style.title}>QUIZ</Text>
+					{quizzes[currentQuiz] ? (
+						<View style={Style.container}>
+							<View>
+								{finished ? (
+									<Score score={score}/>
+								) : (
+									<Timer initialMinute={timer.minutes} initialSeconds={timer.seconds} onTimeOut={onTimeOut}/>
+								)}
+							</View>
+							<View>
+								<QuizNavBar index={currentQuiz} total={quizzes.length} userAnswers={userAnswers} answerCorrect={answerCorrect} onClick={setCurrentQuiz}/>
+							</View>
+							<View>
+								<View>
+									<Photo photo={quizzes[currentQuiz].attachment}/>
+								</View>
+								<View >
+									<View>
+										<Question question={quizzes[currentQuiz].question}/>
+									</View>
+									<View>
+										<Answer answer={userAnswers[currentQuiz] ? userAnswers[currentQuiz] : ""} onAnswerChange={onChangeUserAnswer} correctAnswer={quizzes[currentQuiz].answer} correct={answerCorrect[currentQuiz]} handleEnterKey={nextQuiz}/>
+									</View>
+									<View style={Style.container}>
+										<Actionbar nextClick={nextClick} previousClick={previousClick} submitClick={handleAnswerSubmit} reClick={reset} finished={finished} disabled={disabledActionbar}/>
+									</View>
+									<View>
+										<Author author={quizzes[currentQuiz].author}/>
+									</View>
+								</View>
+							</View>
 						</View>
-						<View >
-							<View>
-								<Question question={quizzes[currentQuiz].question}/>
-							</View>
-							<View>
-								<Answer answer={userAnswers[currentQuiz] ? userAnswers[currentQuiz] : ""} onAnswerChange={onChangeUserAnswer} correctAnswer={quizzes[currentQuiz].answer} correct={answerCorrect[currentQuiz]} handleEnterKey={nextQuiz}/>
-							</View>
-							<View style={Style.container}>
-								<Actionbar nextClick={nextClick} previousClick={previousClick} submitClick={handleAnswerSubmit} reClick={reset} finished={finished} disabled={disabledActionbar}/>
-							</View>
-							<View>
-								<Author author={quizzes[currentQuiz].author}/>
-							</View>
+					) : (
+						<View role="status">
+							<Text>Loading...</Text>
 						</View>
-					</View>
+					) }
 				</View>
-			) : (
-				<View role="status">
-					<Text>Loading...</Text>
-				</View>
-			) }
-		</View>
+			</ScrollView>
+		</SafeAreaView>
 	);
 }

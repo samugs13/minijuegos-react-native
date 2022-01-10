@@ -9,9 +9,9 @@ export default function Answer(props) {
 		setAnswer(props.answer);
 	}, [props.answer]);
 
-	function handleAnswerChange(e) {
-		setAnswer(e.target.value);
-		props.onAnswerChange(e.target.value);
+	function handleAnswerChange(text) {
+		setAnswer(text);
+		props.onAnswerChange(text);
 	}
 
 	function handleKeyPress(e) {
@@ -46,7 +46,7 @@ export default function Answer(props) {
 		<View className="col-7 mx-auto">
 			<TextInput
 				id="user-answer"
-				onChange={handleAnswerChange}
+				onChangeText={handleAnswerChange}
 				onKeyPress={handleKeyPress}
 				style={StyleSheet.compose(
 					Style.answerInput,

@@ -19,6 +19,9 @@ const Style = StyleSheet.create({
 		textAlign: 'center',
 	},
 
+	scrollview: {
+	},
+
 	title: {
 		fontWeight: 'bold',
 		fontSize: 40,
@@ -91,4 +94,4 @@ const Style = StyleSheet.create({
 })
 
 export default Style;
-export {Colors};
+export { Colors };

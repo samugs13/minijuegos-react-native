@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import React from 'react';
+import { Text, View, Image } from 'react-native';
 import Style from "../../../style/quiz.style";
 
 export default function Author(props) {
