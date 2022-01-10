@@ -15,14 +15,14 @@ export default function Actionbar(props) {
 		<View>
 			{props.finished ? (
 				<View style={Style.actionBar}>
-					<Previous click={props.previousClick} />
-					<Next click={props.nextClick} />
+					<Previous click={props.previousClick} disabled={props.disabled.prev} />
+					<Next click={props.nextClick} disabled={props.disabled.next} />
 					<Replay click={props.reClick}/>
 				</View>
 			) : (
 				<View style={Style.actionBar}>
-					<Previous click={props.previousClick} />
-					<Next click={props.nextClick} />
+					<Previous click={props.previousClick} disabled={props.disabled.prev} />
+					<Next click={props.nextClick} disabled={props.disabled.next} />
 					<Reset click={props.reClick}/>
 					<Submit click={props.submitClick} />
 				</View>

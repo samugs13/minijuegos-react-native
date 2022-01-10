@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+
+import Style from '../../../style/quiz.style';
 
 export default function Timer(props) {
 	const {initialMinute = 0,initialSeconds = 0} = props;
@@ -30,7 +32,7 @@ export default function Timer(props) {
 
 	return (
 		<View>
-			<Text> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</Text>
+			<Text style={Style.timer}> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</Text>
 		</View>
 	);
 }

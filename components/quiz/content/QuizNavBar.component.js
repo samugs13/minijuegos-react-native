@@ -1,49 +1,35 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import Style from '../../../style/quiz.style';
+import { View, Text, Button } from 'react-native';
+
+import Style, { Colors } from '../../../style/quiz.style';
 
 export default function QuizNavBar(props) {
 
 	function getButtonColor(i){
-		if(!props.answerCorrect) return "-primary";
+		if(!props.answerCorrect) return Colors.primary;
 
-		if(props.answerCorrect[i]) return "-success";
-		else if(props.answerCorrect[i] === false) return "-danger";
-		else if(props.userAnswers && !props.userAnswers[i]) return "-secondary";
-		else return "-primary";
-	}
-
-	function getButtonSelected(i) {
-		if (i === props.index) {
-			return "";
-		} else {
-			return "-outline";
-		}
-	}
-
-	function getButton(i) {
-		var button = "btn";
-		button += getButtonSelected(i);
-		button += getButtonColor(i);
-		return button;
+		if(props.answerCorrect[i]) return Colors.success;
+		else if(props.answerCorrect[i] === false) return Colors.danger;
+		else if(i === props.index) return Colors.info;
+		else if(props.userAnswers && !props.userAnswers[i]) return Colors.secondary;
+		else return Colors.primary;
 	}
 
 	function buttonRow() {
 		let buttons = [];
 		for (let i = 0; i < props.total; i++) {
 			buttons.push((
-				<button
-					className={`btn ${getButton(i)}`}
-					onClick={() => props.onClick(i)}
+				<Button
+					title={`${i+1}`}
+					onPress={() => props.onClick(i)}
 					key={i}
-				>
-					{i+1}
-				</button>
+					color={getButtonColor(i)}
+				/>
 			))
 		}
 		return buttons;
 	}
-	
+
 	return (
 		<View
 			label="Quiz Navigation Bar"

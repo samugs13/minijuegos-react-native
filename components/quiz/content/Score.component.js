@@ -1,15 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useContext } from 'react';
+import { Text, View } from 'react-native';
 
+import Style from '../../../style/quiz.style';
 
 export default function Score(props) {
 
 	return (
-		<Text>
-			<span className="badge bg-success" style={{marginLeft: "10px",}}>
+		<View style={Style.container}>
+			<Text style={Style.score}>
 				Score: {props.score}/10
-			</span>
-		</Text>
+			</Text>
+		</View>
 	);
 }

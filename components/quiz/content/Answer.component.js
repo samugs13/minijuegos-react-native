@@ -1,10 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
-import Style from "../../../style/quiz.style";
+import Style, {Colors} from "../../../style/quiz.style";
 
 export default function Answer(props) {
+	const [answer, setAnswer] = useState("");
+
+	useEffect(() => {
+		setAnswer(props.answer);
+	}, [props.answer]);
 
 	function handleAnswerChange(e) {
+		setAnswer(e.target.value);
 		props.onAnswerChange(e.target.value);
 	}
 
@@ -15,34 +21,47 @@ export default function Answer(props) {
 	}
 
 	function checkAnswer() {
-		if (props.correct === false) return "is-invalid";
-		else if (props.correct === true) return "is-valid";
-		else return "";
+		if (props.correct === false) {
+			return (
+				<Text style={Style.incorrect}>
+					{`Incorrect: ${props.correctAnswer}`}
+				</Text>
+			);
+		} else if (props.correct === true){
+			return (
+				<Text style={Style.correct}>
+					Correct!
+				</Text>
+			);
+		}
+	}
+
+	function getColor() {
+		if (props.correct === false) return Colors.danger;
+		else if (props.correct === true) return Colors.success;
+		else return "black";
 	}
 
 	return (
 		<View className="col-7 mx-auto">
 			<TextInput
-				className={`form-control ${checkAnswer()}`}
 				id="user-answer"
-				type="text"
 				onChange={handleAnswerChange}
 				onKeyPress={handleKeyPress}
+				style={StyleSheet.compose(
+					Style.answerInput,
+					{
+						borderColor: getColor()
+					}
+				)}
+				value={answer}
+				editable={props.correct == null}
+				returnKeyType="next"
 			>
 			</TextInput>
-			<Text 
-				className="valid-feedback"
-				style={Style.correct}>
-				
-				Correct!
-
-			</Text>
-			<Text 
-				className="invalid-feedback"
-				style={Style.incorrect}
-			>
-				{`Incorrect: ${props.correctAnswer}`}
-			</Text>
+			<View style={Style.container}>
+				{checkAnswer()}
+			</View>
 		</View>
 	);
 }

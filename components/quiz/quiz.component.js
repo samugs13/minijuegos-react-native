@@ -19,6 +19,10 @@ export default function Quiz(props) {
 	const [currentQuiz, setCurrentQuiz] = useState(0);
 	const [score, setScore] = useState(0);
 	const [finished, setFinished] = useState(false);
+	const [disabledActionbar, setDisabledActionbar] = useState({
+		prev: true,
+		next: false,
+	});
 
 	const [timer, setTimer] = useState({
 		minutes: 20,
@@ -39,45 +43,32 @@ export default function Quiz(props) {
 
 	useEffect(() => {
 		fetchData();
-		changeButtonState('prev-btn', false);
 	}, []);
 
 	useEffect(() => {
 		// Set buttons state
 		if (!loaded) {
-			changeButtonState('prev-btn', false);
-			changeButtonState('next-btn', false);
-			changeButtonState('submit-btn', false);
+			setDisabledActionbar({
+				prev: true,
+				next: true,
+			});
 		} else if (currentQuiz === 0) {
-			changeButtonState('prev-btn', false);
-			changeButtonState('next-btn', true);
-			changeButtonState('submit-btn', true);
+			setDisabledActionbar({
+				prev: true,
+				next: false,
+			});
 		} else if (currentQuiz === quizzes.length - 1) {
-			changeButtonState('next-btn', false);
-			changeButtonState('prev-btn', true);
-			changeButtonState('submit-btn', true);
+			setDisabledActionbar({
+				prev: false,
+				next: true,
+			});
 		} else {
-			changeButtonState('prev-btn', true);
-			changeButtonState('next-btn', true);
-			changeButtonState('submit-btn', true);
+			setDisabledActionbar({
+				prev: false,
+				next: false,
+			});
 		}
 	}, [loaded, currentQuiz, quizzes]);
-	
-	useEffect(() => {
-		// Set saved user answer
-		const answerField = document.getElementById('user-answer');
-		if (answerField) {
-			answerField.value = userAnswers[currentQuiz];
-		}
-	
-	}, [loaded, currentQuiz, userAnswers]);
-	
-	useEffect(() => {
-		const answerField = document.getElementById('user-answer');
-		if (answerField) {
-			answerField.disabled = !!finished;
-		}
-	}, [finished]);
 
 	function nextQuiz() {
 		if (currentQuiz < quizzes.length - 1) {
@@ -88,10 +79,12 @@ export default function Quiz(props) {
 	}
 
 	function nextClick(){
+		if (currentQuiz >= quizzes.length - 1) return;
 		setCurrentQuiz(currentQuiz + 1);
 	}
 
 	function previousClick(){
+		if (currentQuiz <=  0) return;
 		setCurrentQuiz(currentQuiz - 1);
 	}
 
@@ -107,10 +100,10 @@ export default function Quiz(props) {
 	}
 
 	function changeButtonState(buttonName, state){
-		const button = document.getElementById(buttonName)
-		if (button) {
-			button.disabled = !state;
-		}
+		// const button = document.getElementById(buttonName)
+		// if (button) {
+		// 	button.disabled = !state;
+		// }
 	}
 
 	function onChangeUserAnswer(answer){
@@ -138,21 +131,21 @@ export default function Quiz(props) {
 	}
 
 	function onTimeOut() {
-		// showNotification("notification-timeout");
 		handleAnswerSubmit();
 	}
 
-	// function showNotification(id) {
-	// 	const toastAnswer = document.getElementById(id)
-	// 	const toast = new Toast(toastAnswer);
-	// 	toast.show()
-	// }
-	
 	return (
 		<View style={Style.container}>
 			<Text style={Style.title}>QUIZ</Text>
 			{quizzes[currentQuiz] ? (
 				<View style={Style.container}>
+					<View>
+						{finished ? (
+							<Score score={score}/>
+						) : (
+							<Timer initialMinute={timer.minutes} initialSeconds={timer.seconds} onTimeOut={onTimeOut}/>
+						)}
+					</View>
 					<View>
 						<QuizNavBar index={currentQuiz} total={quizzes.length} userAnswers={userAnswers} answerCorrect={answerCorrect} onClick={setCurrentQuiz}/>
 					</View>
@@ -162,20 +155,13 @@ export default function Quiz(props) {
 						</View>
 						<View >
 							<View>
-								{finished ? (
-									<Score score={score}/>
-								) : (
-									<Timer initialMinute={timer.minutes} initialSeconds={timer.seconds} onTimeOut={onTimeOut}/>
-								)}
-							</View>
-							<View>
 								<Question question={quizzes[currentQuiz].question}/>
 							</View>
 							<View>
-								<Answer onAnswerChange={onChangeUserAnswer} correctAnswer={quizzes[currentQuiz].answer} correct={answerCorrect[currentQuiz]} handleEnterKey={nextQuiz}/>
+								<Answer answer={userAnswers[currentQuiz] ? userAnswers[currentQuiz] : ""} onAnswerChange={onChangeUserAnswer} correctAnswer={quizzes[currentQuiz].answer} correct={answerCorrect[currentQuiz]} handleEnterKey={nextQuiz}/>
 							</View>
 							<View style={Style.container}>
-								<Actionbar nextClick={nextClick} previousClick={previousClick} submitClick={handleAnswerSubmit} reClick={reset} finished={finished}/>
+								<Actionbar nextClick={nextClick} previousClick={previousClick} submitClick={handleAnswerSubmit} reClick={reset} finished={finished} disabled={disabledActionbar}/>
 							</View>
 							<View>
 								<Author author={quizzes[currentQuiz].author}/>
